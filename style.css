@@ -1,0 +1,76 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #f7f7f7;
+  color: #333;
+}
+
+.hero {
+  text-align: center;
+  padding: 20px;
+  background: white;
+}
+
+.portada {
+  width: 100%;
+  border-radius: 10px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-top: 10px;
+  color: #c9a034;
+}
+
+.sub {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.form-section {
+  background: white;
+  padding: 30px;
+  margin: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+input {
+  width: 90%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+button {
+  background: #c9a034;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+button:hover {
+  background: #a7862b;
+}
+
+.content {
+  padding: 20px;
+}
+
+.cta {
+  display: inline-block;
+  background: #c9a034;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+  margin-top: 20px;
+}
+
+.hidden {
+  display: none;
+}
