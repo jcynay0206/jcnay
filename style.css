@@ -1,25 +1,36 @@
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Montserrat', sans-serif;
   margin: 0;
   background: #f7f7f7;
   color: #333;
 }
 
+/* HERO */
 .hero {
+  position: relative;
   text-align: center;
-  padding: 20px;
-  background: white;
+  color: white;
 }
 
 .portada {
   width: 100%;
-  border-radius: 10px;
+  height: 70vh;
+  object-fit: cover;
+  filter: brightness(0.55);
 }
 
-h1 {
-  font-size: 2.5rem;
-  margin-top: 10px;
-  color: #c9a034;
+.hero-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 700px;
+}
+
+.hero h1 {
+  font-size: 2.6rem;
+  margin-bottom: 10px;
+  font-weight: 700;
 }
 
 .sub {
@@ -27,48 +38,112 @@ h1 {
   margin-bottom: 20px;
 }
 
-.form-section {
+.cta-btn {
+  display: inline-block;
+  background: #c9a034;
+  color: white;
+  padding: 14px 28px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+/* SECCIONES */
+section {
+  padding: 50px 20px;
+  max-width: 900px;
+  margin: auto;
+}
+
+h2 {
+  text-align: center;
+  color: #c9a034;
+  margin-bottom: 25px;
+}
+
+/* BENEFICIOS */
+.benefits ul {
+  list-style: none;
+  padding: 0;
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+
+.benefits li::before {
+  content: "✔ ";
+  color: #c9a034;
+  font-weight: bold;
+}
+
+/* POR QUÉ AHORA */
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.card {
   background: white;
-  padding: 30px;
-  margin: 20px;
+  padding: 20px;
   border-radius: 10px;
+  font-size: 1.2rem;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* SOBRE TI */
+.about p {
+  font-size: 1.1rem;
+  line-height: 1.7;
   text-align: center;
 }
 
+/* TESTIMONIO */
+.testimonial blockquote {
+  font-size: 1.4rem;
+  font-style: italic;
+  text-align: center;
+  margin: 0;
+}
+
+.client {
+  text-align: center;
+  margin-top: 10px;
+  color: #555;
+}
+
+/* FORMULARIO */
+.form-section {
+  background: white;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
 input {
-  width: 90%;
-  padding: 12px;
+  width: 100%;
+  padding: 14px;
   margin: 10px 0;
   border-radius: 6px;
   border: 1px solid #ccc;
+  font-size: 1rem;
 }
 
 button {
+  width: 100%;
   background: #c9a034;
   color: white;
-  padding: 12px 20px;
+  padding: 14px;
   border: none;
   border-radius: 6px;
+  font-size: 1.1rem;
   cursor: pointer;
-  font-size: 1rem;
+  font-weight: 600;
 }
 
 button:hover {
   background: #a7862b;
-}
-
-.content {
-  padding: 20px;
-}
-
-.cta {
-  display: inline-block;
-  background: #c9a034;
-  color: white;
-  padding: 12px 20px;
-  border-radius: 6px;
-  text-decoration: none;
-  margin-top: 20px;
 }
 
 .hidden {
