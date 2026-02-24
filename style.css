@@ -149,3 +149,114 @@ button:hover {
 .hidden {
   display: none;
 }
+/* ============================
+   OPTIMIZACIÓN MÓVIL
+   ============================ */
+@media (max-width: 768px) {
+
+  /* HERO */
+  .portada {
+    height: 55vh;
+    object-position: center;
+  }
+
+  .hero-text {
+    width: 90%;
+    top: 55%;
+  }
+
+  .hero h1 {
+    font-size: 1.9rem;
+    line-height: 1.3;
+  }
+
+  .sub {
+    font-size: 1rem;
+    margin-bottom: 15px;
+  }
+
+  .cta-btn {
+    padding: 12px 20px;
+    font-size: 1rem;
+  }
+
+  /* SECCIONES */
+  section {
+    padding: 40px 18px;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+  }
+
+  /* BENEFICIOS */
+  .benefits ul {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  /* POR QUÉ AHORA */
+  .cards {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .card {
+    font-size: 1.05rem;
+    padding: 16px;
+  }
+
+  /* SOBRE TI */
+  .about p {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  /* TESTIMONIO */
+  .testimonial blockquote {
+    font-size: 1.2rem;
+    padding: 0 10px;
+  }
+
+  /* FORMULARIO */
+  .form-section {
+    padding: 30px 20px;
+  }
+
+  input {
+    padding: 12px;
+    font-size: 1rem;
+  }
+
+  button {
+    padding: 12px;
+    font-size: 1rem;
+  }
+}
+
+/* ============================
+   OPTIMIZACIÓN EXTRA PARA IPHONE PEQUEÑO
+   ============================ */
+@media (max-width: 480px) {
+
+  .hero h1 {
+    font-size: 1.6rem;
+  }
+
+  .sub {
+    font-size: 0.95rem;
+  }
+
+  .cta-btn {
+    font-size: 0.95rem;
+    padding: 10px 18px;
+  }
+
+  .card {
+    font-size: 1rem;
+  }
+
+  .testimonial blockquote {
+    font-size: 1.1rem;
+  }
+}
