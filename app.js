@@ -4,7 +4,7 @@ document.getElementById("leadForm").addEventListener("submit", async function(e)
   const form = e.target;
   const data = new FormData(form);
 
-  const response = await fetch("https://formspree.io/f/TU_ENDPOINT", {
+  const response = await fetch("https://formspree.io/f/mkovpewz", {
     method: "POST",
     body: data,
     headers: { "Accept": "application/json" }
