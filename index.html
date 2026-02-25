@@ -1000,36 +1000,35 @@
 
   <div class="hero-right">
     <div class="hero-card">
-      <div class="card-title">Agenda tu consulta</div>
-      <div class="card-sub">Análisis personalizado — 100% gratuito</div>
+      <form id="leadForm" action="https://api.staticforms.xyz/submit" method="POST">
+    <input type="hidden" name="accessKey" value="sf_1a81863jf4k7n7c0lnd9mj4c">
 
-      <div class="form-group">
-        <label>Nombre completo</label>
-        <input type="text" placeholder="Tu nombre">
-      </div>
+<div class="form-group">
+    <label>Nombre completo</label>
+    <input type="text" name="name" placeholder="Tu nombre" required>
+</div>
 
-      <div class="form-group">
-        <label>Correo electrónico</label>
-        <input type="email" placeholder="correo@ejemplo.com">
-      </div>
+<div class="form-group">
+    <label>Correo electrónico</label>
+    <input type="email" name="email" placeholder="correo@ejemplo.com" required>
+</div>
 
-      <div class="form-group">
-        <label>Teléfono / WhatsApp</label>
-        <input type="tel" placeholder="+1 (555) 000-0000">
-      </div>
+<div class="form-group">
+    <label>Teléfono / WhatsApp</label>
+    <input type="tel" name="phone" placeholder="+1 (555) 000-0000">
+</div>
 
-      <div class="form-group">
-        <label>¿Cuál es tu meta principal?</label>
-        <select>
-          <option value="" disabled selected>Selecciona una opción</option>
-          <option>Jubilarme antes de los 55</option>
-          <option>Pagar la universidad de mis hijos</option>
-          <option>Pagar menos impuestos</option>
-          <option>Las 3 metas anteriores</option>
-        </select>
-      </div>
-
-      <button class="btn-form">QUIERO MI CONSULTA GRATIS →</button>
+<div class="form-group">
+    <label>¿Cuál es tu meta principal?</label>
+    <select name="goal" required>
+        <option value="" disabled selected>Selecciona una opción</option>
+        <option>Jubilarme antes de los 55</option>
+        <option>Pagar la universidad de mis hijos</option>
+        <option>Pagar menos impuestos</option>
+        <option>Las 3 metas anteriores</option>
+    </select>
+</div>
+        <button class="btn-form">QUIERO MI CONSULTA GRATIS →</button>
       <p class="form-privacy">🔒 Tu información es 100% privada y segura</p>
     </div>
   </div>
@@ -1252,7 +1251,7 @@
     <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
 
     <p style="font-size:0.8rem; color:var(--gray); margin-top:1.5rem; font-weight:300;">
-      Disponibilidad limitada · Confirmación inmediata por correo
+     Confirmación inmediata por correo
     </p>
   </div>
 </section>
