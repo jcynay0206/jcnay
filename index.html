@@ -4,1286 +4,689 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>El Plan 3 en 1 | Seguros de Vida</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
 <style>
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-  :root {
-    --gold: #B8860B;
-    --gold-light: #D4A017;
-    --gold-pale: #8B6914;
-    --navy: #F5F0E8;
-    --navy-mid: #EDE8DC;
-    --navy-light: #E5DFD0;
-    --white: #2C2416;
-    --gray: #6B5F4A;
-    --font-display: 'Cormorant Garamond', serif;
-    --font-body: 'DM Sans', sans-serif;
-  }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--navy);
-    color: var(--white);
-    font-family: var(--font-body);
-    overflow-x: hidden;
-  }
-
-  /* ── NOISE TEXTURE OVERLAY ── */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 1000;
-    opacity: 0.4;
-  }
-
-  /* ── NAV ── */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    padding: 1.5rem 4rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: linear-gradient(to bottom, rgba(245,240,232,0.97), transparent);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(184,134,11,0.1);
-  }
-
-  .nav-logo {
-    font-family: var(--font-display);
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: var(--gold);
-    letter-spacing: 0.05em;
-  }
-
-  .nav-cta {
-    background: transparent;
-    border: 1px solid var(--gold);
-    color: var(--gold);
-    padding: 0.6rem 1.8rem;
-    font-family: var(--font-body);
-    font-size: 0.85rem;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-decoration: none;
-  }
-
-  .nav-cta:hover {
-    background: var(--gold);
-    color: var(--navy);
-  }
-
-  /* ── HERO ── */
-  .hero {
-    min-height: 100vh;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero-bg {
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse at 70% 50%, rgba(201,168,76,0.08) 0%, transparent 60%),
-                radial-gradient(ellipse at 20% 80%, rgba(26,48,96,0.8) 0%, transparent 50%);
-  }
-
-  .hero-lines {
-    position: absolute;
-    top: 0; right: 0;
-    width: 55%;
-    height: 100%;
-    opacity: 0.06;
-    background-image: repeating-linear-gradient(
-      -45deg,
-      var(--gold) 0px,
-      var(--gold) 1px,
-      transparent 1px,
-      transparent 40px
-    );
-  }
-
-  .hero-left {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 8rem 4rem 4rem 6rem;
-  }
-
-  .hero-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 2rem;
-    opacity: 0;
-    animation: fadeUp 0.8s ease 0.2s forwards;
-  }
-
-  .hero-tag::before {
-    content: '';
-    display: block;
-    width: 2rem;
-    height: 1px;
-    background: var(--gold);
-  }
-
-  .hero-title {
-    font-family: var(--font-display);
-    font-size: clamp(3rem, 5vw, 5.5rem);
-    font-weight: 300;
-    line-height: 1.05;
-    margin-bottom: 1.5rem;
-    opacity: 0;
-    animation: fadeUp 0.8s ease 0.4s forwards;
-  }
-
-  .hero-title em {
-    font-style: italic;
-    color: var(--gold);
-  }
-
-  .hero-title strong {
-    font-weight: 700;
-    display: block;
-  }
-
-  .hero-sub {
-    font-size: 1.05rem;
-    font-weight: 300;
-    color: rgba(250,250,248,0.7);
-    line-height: 1.7;
-    max-width: 480px;
-    margin-bottom: 3rem;
-    opacity: 0;
-    animation: fadeUp 0.8s ease 0.6s forwards;
-  }
-
-  .hero-pills {
-    display: flex;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-    margin-bottom: 3rem;
-    opacity: 0;
-    animation: fadeUp 0.8s ease 0.7s forwards;
-  }
-
-  .pill {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.4rem 1rem;
-    border: 1px solid rgba(201,168,76,0.3);
-    border-radius: 100px;
-    font-size: 0.8rem;
-    color: var(--gold-pale);
-    background: rgba(201,168,76,0.05);
-  }
-
-  .pill-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--gold);
-  }
-
-  .hero-cta-group {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-    opacity: 0;
-    animation: fadeUp 0.8s ease 0.8s forwards;
-  }
-
-  .btn-primary {
-    background: var(--gold);
-    color: var(--navy);
-    border: none;
-    padding: 1rem 2.5rem;
-    font-family: var(--font-body);
-    font-size: 0.9rem;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    display: inline-block;
-  }
-
-  .btn-primary:hover {
-    background: var(--gold-light);
-    transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(201,168,76,0.3);
-  }
-
-  .btn-secondary {
-    color: var(--white);
-    text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: 400;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    transition: gap 0.3s ease;
-  }
-
-  .btn-secondary:hover { gap: 0.8rem; }
-
-  .hero-right {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 8rem 4rem 4rem 2rem;
-    opacity: 0;
-    animation: fadeIn 1.2s ease 0.5s forwards;
-  }
-
-  .hero-card {
-    background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(245,240,232,0.98));
-    border: 1px solid rgba(184,134,11,0.25);
-    padding: 3rem;
-    max-width: 420px;
-    width: 100%;
-    position: relative;
-    backdrop-filter: blur(20px);
-    box-shadow: 0 20px 60px rgba(184,134,11,0.15);
-  }
-
-  .hero-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  }
-
-  .card-title {
-    font-family: var(--font-display);
-    font-size: 1.8rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    color: var(--gold);
-  }
-
-  .card-sub {
-    font-size: 0.85rem;
-    color: var(--gray);
-    margin-bottom: 2rem;
-    font-weight: 300;
-  }
-
-  .form-group {
-    margin-bottom: 1.2rem;
-  }
-
-  .form-group label {
-    display: block;
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--gray);
-    margin-bottom: 0.5rem;
-  }
-
-  .form-group input,
-  .form-group select {
-    width: 100%;
-    background: rgba(255,255,255,0.8);
-    border: 1px solid rgba(184,134,11,0.3);
-    color: #2C2416;
-    padding: 0.85rem 1rem;
-    font-family: var(--font-body);
-    font-size: 0.9rem;
-    outline: none;
-    transition: border-color 0.3s ease;
-    -webkit-appearance: none;
-  }
-
-  .form-group input::placeholder { color: rgba(44,36,22,0.4); }
-  .form-group input:focus,
-  .form-group select:focus { border-color: var(--gold); }
-
-  .form-group select option { background: #F5F0E8; color: #2C2416; }
-
-  .btn-form {
-    width: 100%;
-    background: var(--gold);
-    color: var(--navy);
-    border: none;
-    padding: 1rem;
-    font-family: var(--font-body);
-    font-size: 0.95rem;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: 0.5rem;
-  }
-
-  .btn-form:hover {
-    background: var(--gold-light);
-    box-shadow: 0 8px 25px rgba(201,168,76,0.35);
-  }
-
-  .form-privacy {
-    text-align: center;
-    font-size: 0.72rem;
-    color: rgba(255,255,255,0.3);
-    margin-top: 1rem;
-  }
-
-  /* ── STATS BAR ── */
-  .stats-bar {
-    background: var(--navy-mid);
-    border-top: 1px solid rgba(201,168,76,0.15);
-    border-bottom: 1px solid rgba(201,168,76,0.15);
-    padding: 2.5rem 6rem;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
-  }
-
-  .stat-item {
-    text-align: center;
-    padding: 0 1rem;
-    border-right: 1px solid rgba(255,255,255,0.06);
-  }
-
-  .stat-item:last-child { border-right: none; }
-
-  .stat-number {
-    font-family: var(--font-display);
-    font-size: 2.8rem;
-    font-weight: 700;
-    color: var(--gold);
-    line-height: 1;
-    margin-bottom: 0.4rem;
-  }
-
-  .stat-label {
-    font-size: 0.8rem;
-    font-weight: 400;
-    color: var(--gray);
-    letter-spacing: 0.05em;
-  }
-
-  /* ── PROBLEMS SECTION ── */
-  .section {
-    padding: 6rem 6rem;
-  }
-
-  .section-tag {
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 1rem;
-  }
-
-  .section-title {
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 3.5vw, 3.2rem);
-    font-weight: 300;
-    line-height: 1.15;
-    margin-bottom: 1.5rem;
-  }
-
-  .section-title em { font-style: italic; color: var(--gold); }
-
-  .problems-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
-    margin-top: 3rem;
-  }
-
-  .problem-card {
-    background: var(--navy-mid);
-    padding: 2.5rem;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.3s ease;
-  }
-
-  .problem-card:hover { transform: translateY(-4px); }
-
-  .problem-card::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0;
-    width: 0; height: 2px;
-    background: var(--gold);
-    transition: width 0.4s ease;
-  }
-
-  .problem-card:hover::after { width: 100%; }
-
-  .problem-icon {
-    font-size: 2rem;
-    margin-bottom: 1.2rem;
-  }
-
-  .problem-title {
-    font-family: var(--font-display);
-    font-size: 1.4rem;
-    font-weight: 600;
-    margin-bottom: 0.8rem;
-    color: var(--gold-pale);
-  }
-
-  .problem-text {
-    font-size: 0.9rem;
-    font-weight: 300;
-    color: var(--gray);
-    line-height: 1.7;
-  }
-
-  /* ── SOLUTION SECTION ── */
-  .solution {
-    background: linear-gradient(135deg, var(--navy-mid), var(--navy));
-    padding: 6rem;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .solution::before {
-    content: '3EN1';
-    position: absolute;
-    right: -2rem;
-    top: 50%;
-    transform: translateY(-50%);
-    font-family: var(--font-display);
-    font-size: 20rem;
-    font-weight: 700;
-    color: rgba(201,168,76,0.04);
-    line-height: 1;
-    pointer-events: none;
-  }
-
-  .solution-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6rem;
-    align-items: center;
-    position: relative;
-    z-index: 1;
-  }
-
-  .solution-items {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    margin-top: 3rem;
-  }
-
-  .solution-item {
-    display: flex;
-    gap: 1.5rem;
-    align-items: flex-start;
-    padding: 1.5rem;
-    border: 1px solid rgba(184,134,11,0.2);
-    background: rgba(255,255,255,0.6);
-    transition: border-color 0.3s ease, background 0.3s ease;
-    cursor: default;
-  }
-
-  .solution-item:hover {
-    border-color: rgba(184,134,11,0.5);
-    background: rgba(184,134,11,0.08);
-  }
-
-  .solution-num {
-    font-family: var(--font-display);
-    font-size: 3rem;
-    font-weight: 700;
-    color: rgba(201,168,76,0.2);
-    line-height: 1;
-    min-width: 3rem;
-    transition: color 0.3s ease;
-  }
-
-  .solution-item:hover .solution-num { color: var(--gold); }
-
-  .solution-content h3 {
-    font-family: var(--font-display);
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: var(--gold-pale);
-    margin-bottom: 0.5rem;
-  }
-
-  .solution-content p {
-    font-size: 0.88rem;
-    color: var(--gray);
-    line-height: 1.65;
-    font-weight: 300;
-  }
-
-  .solution-visual {
-    position: relative;
-  }
-
-  .visual-card {
-    background: linear-gradient(135deg, #ffffff, #f5f0e8);
-    border: 1px solid rgba(184,134,11,0.3);
-    padding: 2.5rem;
-    position: relative;
-    box-shadow: 0 20px 50px rgba(184,134,11,0.1);
-  }
-
-  .visual-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
-  }
-
-  .visual-badge {
-    position: absolute;
-    top: -1rem;
-    right: 2rem;
-    background: var(--gold);
-    color: var(--navy);
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 0.3rem 1rem;
-  }
-
-  .example-title {
-    font-family: var(--font-display);
-    font-size: 1.6rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    color: var(--white);
-  }
-
-  .example-sub {
-    font-size: 0.82rem;
-    color: var(--gray);
-    margin-bottom: 2rem;
-  }
-
-  .example-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 0;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-  }
-
-  .example-row:last-child { border-bottom: none; }
-
-  .example-label {
-    font-size: 0.82rem;
-    color: var(--gray);
-    font-weight: 300;
-  }
-
-  .example-value {
-    font-family: var(--font-display);
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: var(--gold);
-  }
-
-  .example-note {
-    font-size: 0.75rem;
-    color: rgba(201,168,76,0.6);
-    font-style: italic;
-    margin-top: 1.5rem;
-    text-align: center;
-  }
-
-  /* ── HOW IT WORKS ── */
-  .steps {
-    padding: 6rem;
-    background: var(--navy);
-  }
-
-  .steps-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2px;
-    margin-top: 4rem;
-    position: relative;
-  }
-
-  .steps-grid::before {
-    content: '';
-    position: absolute;
-    top: 2.5rem;
-    left: 12.5%;
-    right: 12.5%;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold), var(--gold), var(--gold), transparent);
-    opacity: 0.3;
-  }
-
-  .step-card {
-    padding: 2.5rem 2rem;
-    text-align: center;
-    background: var(--navy-mid);
-    position: relative;
-  }
-
-  .step-num {
-    width: 5rem;
-    height: 5rem;
-    border: 1px solid rgba(201,168,76,0.3);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: var(--font-display);
-    font-size: 1.8rem;
-    font-weight: 600;
-    color: var(--gold);
-    margin: 0 auto 1.5rem;
-    background: var(--navy);
-    position: relative;
-    z-index: 1;
-  }
-
-  .step-title {
-    font-family: var(--font-display);
-    font-size: 1.2rem;
-    font-weight: 600;
-    margin-bottom: 0.75rem;
-    color: var(--white);
-  }
-
-  .step-text {
-    font-size: 0.82rem;
-    color: var(--gray);
-    line-height: 1.65;
-    font-weight: 300;
-  }
-
-  /* ── GUIDE DOWNLOAD ── */
-  .guide {
-    background: linear-gradient(135deg, rgba(201,168,76,0.08), rgba(26,48,96,0.5));
-    border-top: 1px solid rgba(201,168,76,0.2);
-    border-bottom: 1px solid rgba(201,168,76,0.2);
-    padding: 5rem 6rem;
-  }
-
-  .guide-inner {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6rem;
-    align-items: center;
-  }
-
-  .guide-mockup {
-    position: relative;
-    display: flex;
-    justify-content: center;
-  }
-
-  .mockup-card {
-    width: 260px;
-    background: linear-gradient(135deg, #0f2a50, #1a3a6a);
-    border: 1px solid rgba(201,168,76,0.4);
-    padding: 2.5rem 2rem;
-    text-align: center;
-    position: relative;
-    box-shadow: 20px 20px 60px rgba(0,0,0,0.5), -5px -5px 30px rgba(201,168,76,0.05);
-    transform: rotate(-3deg);
-    transition: transform 0.3s ease;
-  }
-
-  .mockup-card:hover { transform: rotate(0deg); }
-
-  .mockup-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--gold), var(--gold-light));
-  }
-
-  .mockup-icon { font-size: 3rem; margin-bottom: 1rem; }
-
-  .mockup-title {
-    font-family: var(--font-display);
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: var(--gold);
-    line-height: 1.1;
-    margin-bottom: 0.75rem;
-  }
-
-  .mockup-sub {
-    font-size: 0.78rem;
-    color: rgba(255,255,255,0.5);
-    line-height: 1.5;
-  }
-
-  .mockup-badge {
-    position: absolute;
-    bottom: -1rem;
-    right: -1rem;
-    background: var(--gold);
-    color: var(--navy);
-    font-size: 0.7rem;
-    font-weight: 700;
-    padding: 0.5rem 1rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  .guide-content h2 {
-    font-family: var(--font-display);
-    font-size: 2.8rem;
-    font-weight: 300;
-    line-height: 1.2;
-    margin-bottom: 1rem;
-  }
-
-  .guide-content h2 em {
-    font-style: italic;
-    color: var(--gold);
-    display: block;
-  }
-
-  .guide-content p {
-    font-size: 0.95rem;
-    color: rgba(250,250,248,0.65);
-    line-height: 1.7;
-    font-weight: 300;
-    margin-bottom: 2rem;
-  }
-
-  .guide-list {
-    list-style: none;
-    margin-bottom: 2.5rem;
-  }
-
-  .guide-list li {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    font-size: 0.9rem;
-    color: var(--white);
-    padding: 0.6rem 0;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-  }
-
-  .guide-list li::before {
-    content: '✦';
-    color: var(--gold);
-    font-size: 0.6rem;
-    min-width: 1rem;
-  }
-
-  /* ── CONSULT SECTION ── */
-  .consult {
-    padding: 6rem;
-    background: var(--navy-mid);
-  }
-
-  .consult-inner {
-    max-width: 700px;
-    margin: 0 auto;
-    text-align: center;
-  }
-
-  .consult-inner h2 {
-    font-family: var(--font-display);
-    font-size: 3rem;
-    font-weight: 300;
-    line-height: 1.2;
-    margin-bottom: 1rem;
-  }
-
-  .consult-inner h2 em {
-    font-style: italic;
-    color: var(--gold);
-  }
-
-  .consult-inner p {
-    color: var(--gray);
-    font-size: 1rem;
-    line-height: 1.7;
-    font-weight: 300;
-    margin-bottom: 3rem;
-  }
-
-  .consult-features {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-    margin-bottom: 3rem;
-  }
-
-  .consult-feat {
-    padding: 1.5rem 1rem;
-    border: 1px solid rgba(184,134,11,0.2);
-    background: rgba(255,255,255,0.6);
-  }
-
-  .consult-feat-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
-
-  .consult-feat-text {
-    font-size: 0.8rem;
-    color: var(--gray);
-    line-height: 1.5;
-  }
-
-  /* ── FOOTER ── */
-  footer {
-    background: var(--navy);
-    border-top: 1px solid rgba(201,168,76,0.15);
-    padding: 3rem 6rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .footer-logo {
-    font-family: var(--font-display);
-    font-size: 1.3rem;
-    color: var(--gold);
-    font-weight: 600;
-  }
-
-  .footer-text {
-    font-size: 0.78rem;
-    color: var(--gray);
-    text-align: center;
-  }
-
-  .footer-links {
-    display: flex;
-    gap: 2rem;
-  }
-
-  .footer-links a {
-    font-size: 0.78rem;
-    color: var(--gray);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-
-  .footer-links a:hover { color: var(--gold); }
-
-  /* ── ANIMATIONS ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-
-  /* ── FLOATING CTA ── */
-  .floating-cta {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    z-index: 200;
-    background: var(--gold);
-    color: var(--navy);
-    padding: 1rem 2rem;
-    font-family: var(--font-body);
-    font-size: 0.85rem;
-    font-weight: 700;
-    cursor: pointer;
-    border: none;
-    box-shadow: 0 8px 30px rgba(201,168,76,0.4);
-    transition: all 0.3s ease;
-    text-decoration: none;
-    letter-spacing: 0.05em;
-    animation: pulse 3s ease-in-out infinite;
-  }
-
-  .floating-cta:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 15px 40px rgba(201,168,76,0.5);
-  }
-
-  @keyframes pulse {
-    0%, 100% { box-shadow: 0 8px 30px rgba(201,168,76,0.4); }
-    50% { box-shadow: 0 8px 50px rgba(201,168,76,0.7); }
-  }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 1024px) {
-    nav { padding: 1.5rem 2rem; }
-    .hero { grid-template-columns: 1fr; min-height: auto; }
-    .hero-left { padding: 7rem 2rem 2rem; }
-    .hero-right { padding: 2rem; }
-    .stats-bar { grid-template-columns: repeat(2, 1fr); padding: 2rem; }
-    .section { padding: 4rem 2rem; }
-    .problems-grid { grid-template-columns: 1fr; gap: 2px; }
-    .solution { padding: 4rem 2rem; }
-    .solution-grid { grid-template-columns: 1fr; gap: 3rem; }
-    .steps { padding: 4rem 2rem; }
-    .steps-grid { grid-template-columns: repeat(2, 1fr); }
-    .steps-grid::before { display: none; }
-    .guide { padding: 4rem 2rem; }
-    .guide-inner { grid-template-columns: 1fr; gap: 3rem; }
-    .consult { padding: 4rem 2rem; }
-    .consult-features { grid-template-columns: 1fr; }
-    footer { flex-direction: column; gap: 1.5rem; padding: 2rem; text-align: center; }
-    .footer-links { justify-content: center; }
-  }
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+--gold: #B8860B;
+--gold-light: #D4A017;
+--gold-pale: #8B6914;
+--navy: #F5F0E8;
+--navy-mid: #EDE8DC;
+--navy-light: #E5DFD0;
+--white: #2C2416;
+--gray: #6B5F4A;
+--font-display: 'Cormorant Garamond', serif;
+--font-body: 'DM Sans', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+background: var(--navy);
+color: var(--white);
+font-family: var(--font-body);
+overflow-x: hidden;
+}
+
+/* NOISE */
+body::before {
+content: '';
+position: fixed;
+inset: 0;
+background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+pointer-events: none;
+z-index: 1000;
+opacity: 0.4;
+}
+
+/* NAV */
+nav {
+position: fixed;
+top: 0; left: 0; right: 0;
+z-index: 100;
+padding: 1.5rem 4rem;
+display: flex;
+justify-content: space-between;
+align-items: center;
+background: linear-gradient(to bottom, rgba(245,240,232,0.97), transparent);
+backdrop-filter: blur(10px);
+border-bottom: 1px solid rgba(184,134,11,0.1);
+}
+
+.nav-logo {
+font-family: var(--font-display);
+font-size: 1.5rem;
+font-weight: 600;
+color: var(--gold);
+letter-spacing: 0.05em;
+}
+
+.nav-cta {
+background: transparent;
+border: 1px solid var(--gold);
+color: var(--gold);
+padding: 0.6rem 1.8rem;
+font-size: 0.85rem;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+cursor: pointer;
+transition: all 0.3s ease;
+text-decoration: none;
+}
+
+.nav-cta:hover {
+background: var(--gold);
+color: var(--navy);
+}
+
+/* HERO */
+.hero {
+min-height: 100vh;
+display: grid;
+grid-template-columns: 1fr 1fr;
+position: relative;
+overflow: hidden;
+}
+
+.hero-bg {
+position: absolute;
+inset: 0;
+background: radial-gradient(ellipse at 70% 50%, rgba(201,168,76,0.08) 0%, transparent 60%),
+radial-gradient(ellipse at 20% 80%, rgba(26,48,96,0.8) 0%, transparent 50%);
+}
+
+.hero-lines {
+position: absolute;
+top: 0; right: 0;
+width: 55%;
+height: 100%;
+opacity: 0.06;
+background-image: repeating-linear-gradient(
+-45deg,
+var(--gold) 0px,
+var(--gold) 1px,
+transparent 1px,
+transparent 40px
+);
+}
+
+.hero-left {
+position: relative;
+z-index: 2;
+display: flex;
+flex-direction: column;
+justify-content: center;
+padding: 8rem 4rem 4rem 6rem;
+}
+
+.hero-tag {
+display: inline-flex;
+align-items: center;
+gap: 0.5rem;
+font-size: 0.75rem;
+letter-spacing: 0.2em;
+text-transform: uppercase;
+color: var(--gold);
+margin-bottom: 2rem;
+opacity: 0;
+animation: fadeUp 0.8s ease 0.2s forwards;
+}
+
+.hero-tag::before {
+content: '';
+width: 2rem;
+height: 1px;
+background: var(--gold);
+}
+
+.hero-title {
+font-family: var(--font-display);
+font-size: clamp(3rem, 5vw, 5.5rem);
+font-weight: 300;
+line-height: 1.05;
+margin-bottom: 1.5rem;
+opacity: 0;
+animation: fadeUp 0.8s ease 0.4s forwards;
+}
+
+.hero-title em { color: var(--gold); font-style: italic; }
+.hero-title strong { font-weight: 700; display: block; }
+
+.hero-sub {
+font-size: 1.05rem;
+font-weight: 300;
+color: rgba(250,250,248,0.7);
+line-height: 1.7;
+max-width: 480px;
+margin-bottom: 3rem;
+opacity: 0;
+animation: fadeUp 0.8s ease 0.6s forwards;
+}
+
+.hero-pills {
+display: flex;
+gap: 0.75rem;
+flex-wrap: wrap;
+margin-bottom: 3rem;
+opacity: 0;
+animation: fadeUp 0.8s ease 0.7s forwards;
+}
+
+.pill {
+display: flex;
+align-items: center;
+gap: 0.4rem;
+padding: 0.4rem 1rem;
+border: 1px solid rgba(201,168,76,0.3);
+border-radius: 100px;
+font-size: 0.8rem;
+color: var(--gold-pale);
+background: rgba(201,168,76,0.05);
+}
+
+.pill-dot {
+width: 6px;
+height: 6px;
+border-radius: 50%;
+background: var(--gold);
+}
+
+.hero-cta-group {
+display: flex;
+gap: 1rem;
+align-items: center;
+opacity: 0;
+animation: fadeUp 0.8s ease 0.8s forwards;
+}
+
+.btn-primary {
+background: var(--gold);
+color: var(--navy);
+padding: 1rem 2.5rem;
+font-size: 0.9rem;
+font-weight: 600;
+text-decoration: none;
+transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+background: var(--gold-light);
+transform: translateY(-2px);
+box-shadow: 0 10px 30px rgba(201,168,76,0.3);
+}
+
+.btn-secondary {
+color: var(--white);
+text-decoration: none;
+font-size: 0.9rem;
+display: flex;
+align-items: center;
+gap: 0.5rem;
+transition: gap 0.3s ease;
+}
+
+.btn-secondary:hover { gap: 0.8rem; }
+
+/* HERO RIGHT */
+.hero-right {
+position: relative;
+z-index: 2;
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 8rem 4rem 4rem 2rem;
+opacity: 0;
+animation: fadeIn 1.2s ease 0.5s forwards;
+}
+
+.hero-card {
+background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(245,240,232,0.98));
+border: 1px solid rgba(184,134,11,0.25);
+padding: 3rem;
+max-width: 420px;
+width: 100%;
+position: relative;
+backdrop-filter: blur(20px);
+box-shadow: 0 20px 60px rgba(184,134,11,0.15);
+}
+
+.hero-card::before {
+content: '';
+position: absolute;
+top: 0; left: 0; right: 0;
+height: 2px;
+background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+.card-title {
+font-family: var(--font-display);
+font-size: 1.8rem;
+font-weight: 600;
+margin-bottom: 0.5rem;
+color: var(--gold);
+}
+
+.card-sub {
+font-size: 0.85rem;
+color: var(--gray);
+margin-bottom: 2rem;
+font-weight: 300;
+}
+
+/* FORM */
+.form-group { margin-bottom: 1.2rem; }
+.form-group label {
+font-size: 0.75rem;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+color: var(--gray);
+margin-bottom: 0.5rem;
+display: block;
+}
+
+.form-group input,
+.form-group select {
+width: 100%;
+background: rgba(255,255,255,0.8);
+border: 1px solid rgba(184,134,11,0.3);
+color: #2C2416;
+padding: 0.85rem 1rem;
+font-size: 0.9rem;
+outline: none;
+transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus { border-color: var(--gold); }
+
+.btn-form {
+width: 100%;
+background: var(--gold);
+color: var(--navy);
+padding: 1rem;
+font-size: 0.95rem;
+font-weight: 700;
+cursor: pointer;
+transition: all 0.3s ease;
+margin-top: 0.5rem;
+}
+
+.btn-form:hover {
+background: var(--gold-light);
+box-shadow: 0 8px 25px rgba(201,168,76,0.35);
+}
+
+.form-privacy {
+text-align: center;
+font-size: 0.72rem;
+color: rgba(255,255,255,0.3);
+margin-top: 1rem;
+}
 </style>
 </head>
+
 <body>
 
-<!-- NAV -->
 <nav>
-  <div class="nav-logo">El Plan 3 en 1</div>
-  <a href="#consulta" class="nav-cta">Consulta Gratis</a>
+<div class="nav-logo">El Plan 3 en 1</div>
+<a href="#consulta" class="nav-cta">Consulta Gratis</a>
 </nav>
 
-<!-- FLOATING CTA -->
 <a href="#consulta" class="floating-cta">🗓 Agendar Consulta Gratis</a>
 
-<!-- HERO -->
 <section class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-lines"></div>
+<div class="hero-bg"></div>
+<div class="hero-lines"></div>
 
-  <div class="hero-left">
-    <div class="hero-tag">Planificación Financiera Inteligente</div>
+<div class="hero-left">
+<div class="hero-tag">Planificación Financiera Inteligente</div>
 
-    <h1 class="hero-title">
-      Jubílate <em>joven,</em>
-      <strong>libre de impuestos</strong>
-      y sin deudas.
-    </h1>
+<h1 class="hero-title">
+Jubílate <em>joven,</em>
+<strong>libre de impuestos</strong>
+y sin deudas.
+</h1>
 
-    <p class="hero-sub">
-      Descubre el instrumento financiero que las familias inteligentes usan para resolver los 3 grandes problemas del dinero con un solo plan.
-    </p>
+<p class="hero-sub">
+Descubre el instrumento financiero que las familias inteligentes usan para resolver los 3 grandes problemas del dinero con un solo plan.
+</p>
 
-    <div class="hero-pills">
-      <span class="pill"><span class="pill-dot"></span>Retiro anticipado</span>
-      <span class="pill"><span class="pill-dot"></span>0% impuestos</span>
-      <span class="pill"><span class="pill-dot"></span>Universidad sin deudas</span>
-    </div>
+<div class="hero-pills">
+<span class="pill"><span class="pill-dot"></span>Retiro anticipado</span>
+<span class="pill"><span class="pill-dot"></span>0% impuestos</span>
+<span class="pill"><span class="pill-dot"></span>Universidad sin deudas</span>
+</div>
 
-    <div class="hero-cta-group">
-      <a href="https://jcynay0206.github.io/jcnay/guia.pdf" download="El-Plan-3en1.pdf" class="btn-primary">Descargar Guía Gratis →</a>
-      <a href="#como-funciona" class="btn-secondary">Ver cómo funciona →</a>
-    </div>
-  </div>
+<div class="hero-cta-group">
+<a href="https://jcynay0206.github.io/jcnay/guia.pdf" download="El-Plan-3en1.pdf" class="btn-primary">Descargar Guía Gratis →</a>
+<a href="#como-funciona" class="btn-secondary">Ver cómo funciona →</a>
+</div>
+</div>
 
- <div class="hero-card">
+<div class="hero-right">
+<div class="hero-card">
 
-    <div class="card-title">Agenda tu consulta</div>
-    <div class="card-sub">Análisis personalizado — 100% gratuito</div>
+<div class="card-title">Agenda tu consulta</div>
+<div class="card-sub">Análisis personalizado — 100% gratuito</div>
 
-    <form id="leadForm" action="https://api.staticforms.xyz/submit" method="POST">
+<form id="leadForm" action="https://api.staticforms.xyz/submit" method="POST">
+<input type="hidden" name="accessKey" value="sf_1a81863jf4k7n7c0lnd9mj4c">
+<input type="hidden" name="replyTo" value="@">
 
-        <!-- StaticForms Access Key -->
-        <input type="hidden" name="accessKey" value="sf_1a81863jf4k7n7c0lnd9mj4c">
+<div class="form-group">
+<label>Nombre completo</label>
+<input type="text" name="name" placeholder="Tu nombre" required>
+</div>
 
-        <!-- Para que el autoresponder responda al email del usuario -->
-        <input type="hidden" name="replyTo" value="@">
+<div class="form-group">
+<label>Correo electrónico</label>
+<input type="email" name="email" placeholder="correo@ejemplo.com" required>
+</div>
 
-        <div class="form-group">
-            <label>Nombre completo</label>
-            <input type="text" name="name" placeholder="Tu nombre" required>
-        </div>
+<div class="form-group">
+<label>Teléfono / WhatsApp</label>
+<input type="tel" name="phone" placeholder="+1 (555) 000-0000">
+</div>
 
-        <div class="form-group">
-            <label>Correo electrónico</label>
-            <input type="email" name="email" placeholder="correo@ejemplo.com" required>
-        </div>
+<div class="form-group">
+<label>¿Cuál es tu meta principal?</label>
+<select name="goal" required>
+<option value="" disabled selected>Selecciona una opción</option>
+<option>Jubilarme antes de los 55</option>
+<option>Pagar la universidad de mis hijos</option>
+<option>Pagar menos impuestos</option>
+<option>Las 3 metas anteriores</option>
+</select>
+</div>
 
-        <div class="form-group">
-            <label>Teléfono / WhatsApp</label>
-            <input type="tel" name="phone" placeholder="+1 (555) 000-0000">
-        </div>
-
-        <div class="form-group">
-            <label>¿Cuál es tu meta principal?</label>
-            <select name="goal" required>
-                <option value="" disabled selected>Selecciona una opción</option>
-                <option>Jubilarme antes de los 55</option>
-                <option>Pagar la universidad de mis hijos</option>
-                <option>Pagar menos impuestos</option>
-                <option>Las 3 metas anteriores</option>
-            </select>
-        </div>
-
-        <button type="submit" class="btn-form">QUIERO MI CONSULTA GRATIS →</button>
-
-        <p class="form-privacy">🔒 Tu información es 100% privada y segura</p>
-
-    </form>
+<button type="submit" class="btn-form">QUIERO MI CONSULTA GRATIS →</button>
+<p class="form-privacy">🔒 Tu información es 100% privada y segura</p>
+</form>
 
 </div>
-    </div>
-  </div>
+</div>
 </section>
-
 <!-- STATS BAR -->
 <div class="stats-bar">
-  <div class="stat-item">
-    <div class="stat-number">500+</div>
-    <div class="stat-label">Familias asesoradas</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-number">$0</div>
-    <div class="stat-label">Costo de la consulta</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-number">3en1</div>
-    <div class="stat-label">Beneficios en un plan</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-number">100%</div>
-    <div class="stat-label">Legal y garantizado</div>
-  </div>
+    <div class="stat-item">
+        <div class="stat-number">500+</div>
+        <div class="stat-label">Familias asesoradas</div>
+    </div>
+
+    <div class="stat-item">
+        <div class="stat-number">$0</div>
+        <div class="stat-label">Costo de la consulta</div>
+    </div>
+
+    <div class="stat-item">
+        <div class="stat-number">3en1</div>
+        <div class="stat-label">Beneficios en un plan</div>
+    </div>
+
+    <div class="stat-item">
+        <div class="stat-number">100%</div>
+        <div class="stat-label">Legal y garantizado</div>
+    </div>
 </div>
 
 <!-- PROBLEMS -->
 <section class="section">
-  <div class="section-tag">El problema</div>
-  <h2 class="section-title">
-    Los 3 errores que le cuestan<br>
-    <em>millones a las familias</em>
-  </h2>
-  <p style="color: var(--gray); font-size:0.95rem; max-width:560px; line-height:1.7; font-weight:300;">
-    Nadie te enseñó esto en la escuela. Y los bancos no quieren que lo sepas.
-  </p>
+    <div class="section-tag">El problema</div>
 
-  <div class="problems-grid">
-    <div class="problem-card">
-      <div class="problem-icon">⏰</div>
-      <div class="problem-title">Jubilación tardía y pobre</div>
-      <p class="problem-text">Depender solo del seguro social o la pensión del trabajo. El resultado: retirarte a los 65 con apenas el 40% de tu salario y dependiendo de otros.</p>
+    <h2 class="section-title">
+        Los 3 errores que le cuestan<br>
+        <em>millones a las familias</em>
+    </h2>
+
+    <p style="color: var(--gray); font-size:0.95rem; max-width:560px; line-height:1.7; font-weight:300;">
+        Nadie te enseñó esto en la escuela. Y los bancos no quieren que lo sepas.
+    </p>
+
+    <div class="problems-grid">
+        <div class="problem-card">
+            <div class="problem-icon">⏰</div>
+            <div class="problem-title">Jubilación tardía y pobre</div>
+            <p class="problem-text">Depender solo del seguro social o la pensión del trabajo. El resultado: retirarte a los 65 con apenas el 40% de tu salario y dependiendo de otros.</p>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-icon">🎓</div>
+            <div class="problem-title">Universidad = deuda de por vida</div>
+            <p class="problem-text">El promedio de deuda universitaria supera los $37,000. Muchos jóvenes tardan 15-20 años en pagarla, destruyendo su futuro financiero desde el inicio.</p>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-icon">💸</div>
+            <div class="problem-title">Pagar impuestos hasta en el retiro</div>
+            <p class="problem-text">El 401k y el IRA tradicional te cobran impuestos cuando retiras. Si las tasas suben —y subirán— pagarás mucho más de lo que planeas.</p>
+        </div>
     </div>
-    <div class="problem-card">
-      <div class="problem-icon">🎓</div>
-      <div class="problem-title">Universidad = deuda de por vida</div>
-      <p class="problem-text">El promedio de deuda universitaria supera los $37,000. Muchos jóvenes tardan 15-20 años en pagarla, destruyendo su futuro financiero desde el inicio.</p>
-    </div>
-    <div class="problem-card">
-      <div class="problem-icon">💸</div>
-      <div class="problem-title">Pagar impuestos hasta en el retiro</div>
-      <p class="problem-text">El 401k y el IRA tradicional te cobran impuestos cuando retiras. Si las tasas suben —y subirán— pagarás mucho más de lo que planeas.</p>
-    </div>
-  </div>
 </section>
 
 <!-- SOLUTION -->
 <section class="solution">
-  <div class="solution-grid">
-    <div>
-      <div class="section-tag">La solución</div>
-      <h2 class="section-title">
-        Un solo instrumento.<br>
-        <em>Triple beneficio.</em>
-      </h2>
-      <p style="color: var(--gray); font-size:0.95rem; line-height:1.7; font-weight:300; max-width:480px;">
-        El Seguro de Vida con Valor en Efectivo (IUL) es el instrumento más versátil y menos conocido del mercado. No es solo para cuando mueres. Es una herramienta de construcción de riqueza en vida.
-      </p>
+    <div class="solution-grid">
+        <div>
+            <div class="section-tag">La solución</div>
 
-      <div class="solution-items">
-        <div class="solution-item">
-          <div class="solution-num">01</div>
-          <div class="solution-content">
-            <h3>🏖 Retírate joven</h3>
-            <p>Acumula valor en efectivo vinculado al mercado bursátil, sin perder cuando baja. Accede a tu dinero desde los 50 o antes.</p>
-          </div>
+            <h2 class="section-title">
+                Un solo instrumento.<br>
+                <em>Triple beneficio.</em>
+            </h2>
+
+            <p style="color: var(--gray); font-size:0.95rem; line-height:1.7; font-weight:300; max-width:480px;">
+                El Seguro de Vida con Valor en Efectivo (IUL) es el instrumento más versátil y menos conocido del mercado. No es solo para cuando mueres. Es una herramienta de construcción de riqueza en vida.
+            </p>
+
+            <div class="solution-items">
+                <div class="solution-item">
+                    <div class="solution-num">01</div>
+                    <div class="solution-content">
+                        <h3>🏖 Retírate joven</h3>
+                        <p>Acumula valor en efectivo vinculado al mercado bursátil, sin perder cuando baja. Accede a tu dinero desde los 50 o antes.</p>
+                    </div>
+                </div>
+
+                <div class="solution-item">
+                    <div class="solution-num">02</div>
+                    <div class="solution-content">
+                        <h3>💰 Libre de impuestos</h3>
+                        <p>El dinero crece libre de impuestos. Los retiros como préstamos no se reportan al IRS. 100% legal. La estrategia que usan los ricos.</p>
+                    </div>
+                </div>
+
+                <div class="solution-item">
+                    <div class="solution-num">03</div>
+                    <div class="solution-content">
+                        <h3>🎓 Universidad sin deudas</h3>
+                        <p>Usa el valor en efectivo para pagar la universidad. Además, no cuenta como activo en el FAFSA, aumentando la ayuda financiera.</p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="solution-item">
-          <div class="solution-num">02</div>
-          <div class="solution-content">
-            <h3>💰 Libre de impuestos</h3>
-            <p>El dinero crece libre de impuestos. Los retiros como préstamos no se reportan al IRS. 100% legal. La estrategia que usan los ricos.</p>
-          </div>
+
+        <div class="solution-visual">
+            <div class="visual-card">
+                <div class="visual-badge">Ejemplo Real</div>
+
+                <div class="example-title">Familia González</div>
+                <div class="example-sub">35 años • 2 hijos • $500/mes de inversión</div>
+
+                <div class="example-row">
+                    <span class="example-label">Valor en efectivo a los 55</span>
+                    <span class="example-value">$380K</span>
+                </div>
+
+                <div class="example-row">
+                    <span class="example-label">Retiro mensual libre de impuestos</span>
+                    <span class="example-value">$2,500</span>
+                </div>
+
+                <div class="example-row">
+                    <span class="example-label">Fondo para universidad (por hijo)</span>
+                    <span class="example-value">$80K</span>
+                </div>
+
+                <div class="example-row">
+                    <span class="example-label">Cobertura de vida familiar</span>
+                    <span class="example-value">$500K</span>
+                </div>
+
+                <p class="example-note">* Mismo presupuesto. Triple beneficio. Resultados varían según el plan diseñado.</p>
+            </div>
         </div>
-        <div class="solution-item">
-          <div class="solution-num">03</div>
-          <div class="solution-content">
-            <h3>🎓 Universidad sin deudas</h3>
-            <p>Usa el valor en efectivo para pagar la universidad. Además, no cuenta como activo en el FAFSA, aumentando la ayuda financiera.</p>
-          </div>
-        </div>
-      </div>
     </div>
-
-    <div class="solution-visual">
-      <div class="visual-card">
-        <div class="visual-badge">Ejemplo Real</div>
-        <div class="example-title">Familia González</div>
-        <div class="example-sub">35 años • 2 hijos • $500/mes de inversión</div>
-
-        <div class="example-row">
-          <span class="example-label">Valor en efectivo a los 55</span>
-          <span class="example-value">$380K</span>
-        </div>
-        <div class="example-row">
-          <span class="example-label">Retiro mensual libre de impuestos</span>
-          <span class="example-value">$2,500</span>
-        </div>
-        <div class="example-row">
-          <span class="example-label">Fondo para universidad (por hijo)</span>
-          <span class="example-value">$80K</span>
-        </div>
-        <div class="example-row">
-          <span class="example-label">Cobertura de vida familiar</span>
-          <span class="example-value">$500K</span>
-        </div>
-
-        <p class="example-note">* Mismo presupuesto. Triple beneficio. Resultados varían según el plan diseñado.</p>
-      </div>
-    </div>
-  </div>
 </section>
 
 <!-- HOW IT WORKS -->
 <section class="steps" id="como-funciona">
-  <div style="text-align:center; margin-bottom:1rem;">
-    <div class="section-tag" style="display:inline-block;">El proceso</div>
-  </div>
-  <h2 class="section-title" style="text-align:center; max-width:500px; margin:0 auto 0.5rem;">
-    Empieza en <em>4 pasos simples</em>
-  </h2>
+    <div style="text-align:center; margin-bottom:1rem;">
+        <div class="section-tag" style="display:inline-block;">El proceso</div>
+    </div>
 
-  <div class="steps-grid">
-    <div class="step-card">
-      <div class="step-num">1</div>
-      <div class="step-title">Consulta Gratuita</div>
-      <p class="step-text">Agendas una llamada de 30 minutos. Analizamos tu situación financiera actual y tus metas.</p>
+    <h2 class="section-title" style="text-align:center; max-width:500px; margin:0 auto 0.5rem;">
+        Empieza en <em>4 pasos simples</em>
+    </h2>
+
+    <div class="steps-grid">
+        <div class="step-card">
+            <div class="step-num">1</div>
+            <div class="step-title">Consulta Gratuita</div>
+            <p class="step-text">Agendas una llamada de 30 minutos. Analizamos tu situación financiera actual y tus metas.</p>
+        </div>
+
+        <div class="step-card">
+            <div class="step-num">2</div>
+            <div class="step-title">Diseño del Plan</div>
+            <p class="step-text">Creamos un plan personalizado según tu edad, ingresos y objetivos. Sin productos genéricos.</p>
+        </div>
+
+        <div class="step-card">
+            <div class="step-num">3</div>
+            <div class="step-title">Implementación</div>
+            <p class="step-text">Te guiamos paso a paso para activar tu plan. Simple, rápido y sin complicaciones.</p>
+        </div>
+
+        <div class="step-card">
+            <div class="step-num">4</div>
+            <div class="step-title">Seguimiento</div>
+            <p class="step-text">Revisamos tu plan anualmente para asegurarnos de que siempre esté optimizado para ti.</p>
+        </div>
     </div>
-    <div class="step-card">
-      <div class="step-num">2</div>
-      <div class="step-title">Diseño del Plan</div>
-      <p class="step-text">Creamos un plan personalizado según tu edad, ingresos y objetivos. Sin productos genéricos.</p>
-    </div>
-    <div class="step-card">
-      <div class="step-num">3</div>
-      <div class="step-title">Implementación</div>
-      <p class="step-text">Te guiamos paso a paso para activar tu plan. Simple, rápido y sin complicaciones.</p>
-    </div>
-    <div class="step-card">
-      <div class="step-num">4</div>
-      <div class="step-title">Seguimiento</div>
-      <p class="step-text">Revisamos tu plan anualmente para asegurarnos de que siempre esté optimizado para ti.</p>
-    </div>
-  </div>
 </section>
 
 <!-- GUIDE DOWNLOAD -->
 <section class="guide" id="guia">
-  <div class="guide-inner">
-    <div class="guide-mockup">
-      <div class="mockup-card">
-        <div class="mockup-icon">📘</div>
-        <div class="mockup-title">El Plan 3 en 1</div>
-        <div class="mockup-sub">Lo que tu banco y contador nunca te explicaron</div>
-        <div class="mockup-badge">Gratis</div>
-      </div>
+    <div class="guide-inner">
+        <div class="guide-mockup">
+            <div class="mockup-card">
+                <div class="mockup-icon">📘</div>
+                <div class="mockup-title">El Plan 3 en 1</div>
+                <div class="mockup-sub">Lo que tu banco y contador nunca te explicaron</div>
+                <div class="mockup-badge">Gratis</div>
+            </div>
+        </div>
+
+        <div class="guide-content">
+            <div class="section-tag">Descarga gratuita</div>
+
+            <h2>
+                La guía que cambia<br>
+                <em>todo lo que sabías</em>
+            </h2>
+
+            <p>8 páginas con información clara, ejemplos reales y el paso a paso para implementar el Plan 3 en 1 en tu vida.</p>
+
+            <ul class="guide-list">
+                <li>Los 3 errores financieros más costosos y cómo evitarlos</li>
+                <li>Qué es el IUL y cómo funciona en términos simples</li>
+                <li>Ejemplo real con números de una familia promedio</li>
+                <li>Cómo pagar la universidad SIN afectar el FAFSA</li>
+                <li>Por qué el 401k solo te da la mitad de lo que crees</li>
+                <li>Los 5 pasos para empezar tu Plan 3 en 1 hoy</li>
+            </ul>
+
+            <a href="https://jcynay0206.github.io/jcnay/guia.pdf" download="El-Plan-3en1.pdf" class="btn-primary">DESCARGAR GUÍA GRATIS →</a>
+        </div>
     </div>
-
-    <div class="guide-content">
-      <div class="section-tag">Descarga gratuita</div>
-      <h2>
-        La guía que cambia<br>
-        <em>todo lo que sabías</em>
-      </h2>
-      <p>8 páginas con información clara, ejemplos reales y el paso a paso para implementar el Plan 3 en 1 en tu vida.</p>
-
-      <ul class="guide-list">
-        <li>Los 3 errores financieros más costosos y cómo evitarlos</li>
-        <li>Qué es el IUL y cómo funciona en términos simples</li>
-        <li>Ejemplo real con números de una familia promedio</li>
-        <li>Cómo pagar la universidad SIN afectar el FAFSA</li>
-        <li>Por qué el 401k solo te da la mitad de lo que crees</li>
-        <li>Los 5 pasos para empezar tu Plan 3 en 1 hoy</li>
-      </ul>
-
-      <a href="https://jcynay0206.github.io/jcnay/guia.pdf" download="El-Plan-3en1.pdf" class="btn-primary">DESCARGAR GUÍA GRATIS →</a>
-    </div>
-  </div>
 </section>
 
 <!-- CONSULT CTA -->
 <section class="consult" id="consulta">
-  <div class="consult-inner">
-    <div class="section-tag">Sin costo. Sin compromiso.</div>
-    <h2>
-      ¿Listo para tu<br>
-      <em>consulta gratuita?</em>
-    </h2>
-    <p>En 30 minutos te mostramos exactamente cómo el Plan 3 en 1 funciona para tu situación específica. Sin ventas agresivas. Solo información clara y honesta.</p>
+    <div class="consult-inner">
+        <div class="section-tag">Sin costo. Sin compromiso.</div>
 
-    <div class="consult-features">
-      <div class="consult-feat">
-        <div class="consult-feat-icon">⏱</div>
-        <div class="consult-feat-text">30 minutos por videollamada o teléfono</div>
-      </div>
-      <div class="consult-feat">
-        <div class="consult-feat-icon">🎯</div>
-        <div class="consult-feat-text">Análisis 100% personalizado para ti</div>
-      </div>
-      <div class="consult-feat">
-        <div class="consult-feat-icon">🔒</div>
-        <div class="consult-feat-text">Sin compromiso de compra</div>
-      </div>
+        <h2>
+            ¿Listo para tu<br>
+            <em>consulta gratuita?</em>
+        </h2>
+
+        <p>En 30 minutos te mostramos exactamente cómo el Plan 3 en 1 funciona para tu situación específica. Sin ventas agresivas. Solo información clara y honesta.</p>
+
+        <div class="consult-features">
+            <div class="consult-feat">
+                <div class="consult-feat-icon">⏱</div>
+                <div class="consult-feat-text">30 minutos por videollamada o teléfono</div>
+            </div>
+
+            <div class="consult-feat">
+                <div class="consult-feat-icon">🎯</div>
+                <div class="consult-feat-text">Análisis 100% personalizado para ti</div>
+            </div>
+
+            <div class="consult-feat">
+                <div class="consult-feat-icon">🔒</div>
+                <div class="consult-feat-text">Sin compromiso de compra</div>
+            </div>
+        </div>
+
+        <div class="calendly-inline-widget"
+            data-url="https://calendly.com/blindajefamiliarus"
+            style="min-width:320px; height:700px; margin-top:1rem; border:1px solid rgba(184,134,11,0.2);">
+        </div>
+
+        <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+
+        <p style="font-size:0.8rem; color:var(--gray); margin-top:1.5rem; font-weight:300;">
+            Confirmación inmediata por correo
+        </p>
     </div>
-
-    <!-- Calendly inline widget -->
-    <div class="calendly-inline-widget" 
-         data-url="https://calendly.com/blindajefamiliarus" 
-         style="min-width:320px; height:700px; margin-top:1rem; border:1px solid rgba(184,134,11,0.2);">
-    </div>
-    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
-
-    <p style="font-size:0.8rem; color:var(--gray); margin-top:1.5rem; font-weight:300;">
-     Confirmación inmediata por correo
-    </p>
-  </div>
 </section>
 
-<!-- FOOTER -->
+ <!-- FOOTER -->
 <footer>
-  <div class="footer-logo">El Plan 3 en 1</div>
-  <div class="footer-text">
-    © 2026 · Todos los derechos reservados<br>
-    <span style="font-size:0.7rem; opacity:0.5;">Los resultados varían. La información es educativa, no asesoría financiera garantizada.</span>
-  </div>
-  <div class="footer-links">
-    <a href="#">Privacidad</a>
-    <a href="#">Términos</a>
-    <a href="#">Contacto</a>
-  </div>
+    <div class="footer-logo">El Plan 3 en 1</div>
+
+    <div class="footer-text">
+        © 2026 · Todos los derechos reservados<br>
+        <span style="font-size:0.7rem; opacity:0.5;">
+            Los resultados varían. La información es educativa, no asesoría financiera garantizada.
+        </span>
+    </div>
+
+    <div class="footer-links">
+        <a href="#">Privacidad</a>
+        <a href="#">Términos</a>
+        <a href="#">Contacto</a>
+    </div>
 </footer>
 
+<!-- Smooth Scroll reparado -->
+<script>
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+</script>
+
+<!-- StaticForms Script -->
 <script>
 document.getElementById("leadForm").addEventListener("submit", async function(e) {
   e.preventDefault();
@@ -1305,6 +708,6 @@ document.getElementById("leadForm").addEventListener("submit", async function(e)
 });
 </script>
 
- 
 </body>
 </html>
+
