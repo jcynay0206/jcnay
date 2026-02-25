@@ -998,38 +998,52 @@
     </div>
   </div>
 
-  <div class="hero-right">
-    <div class="hero-card">
-      <form id="leadForm" action="https://api.staticforms.xyz/submit" method="POST">
-    <input type="hidden" name="accessKey" value="sf_1a81863jf4k7n7c0lnd9mj4c">
+ <div class="hero-card">
 
-<div class="form-group">
-    <label>Nombre completo</label>
-    <input type="text" name="name" placeholder="Tu nombre" required>
-</div>
+    <div class="card-title">Agenda tu consulta</div>
+    <div class="card-sub">Análisis personalizado — 100% gratuito</div>
 
-<div class="form-group">
-    <label>Correo electrónico</label>
-    <input type="email" name="email" placeholder="correo@ejemplo.com" required>
-</div>
+    <form id="leadForm" action="https://api.staticforms.xyz/submit" method="POST">
 
-<div class="form-group">
-    <label>Teléfono / WhatsApp</label>
-    <input type="tel" name="phone" placeholder="+1 (555) 000-0000">
-</div>
+        <!-- StaticForms Access Key -->
+        <input type="hidden" name="accessKey" value="sf_1a81863jf4k7n7c0lnd9mj4c">
 
-<div class="form-group">
-    <label>¿Cuál es tu meta principal?</label>
-    <select name="goal" required>
-        <option value="" disabled selected>Selecciona una opción</option>
-        <option>Jubilarme antes de los 55</option>
-        <option>Pagar la universidad de mis hijos</option>
-        <option>Pagar menos impuestos</option>
-        <option>Las 3 metas anteriores</option>
-    </select>
+        <!-- Para que el autoresponder responda al email del usuario -->
+        <input type="hidden" name="replyTo" value="@">
+
+        <div class="form-group">
+            <label>Nombre completo</label>
+            <input type="text" name="name" placeholder="Tu nombre" required>
+        </div>
+
+        <div class="form-group">
+            <label>Correo electrónico</label>
+            <input type="email" name="email" placeholder="correo@ejemplo.com" required>
+        </div>
+
+        <div class="form-group">
+            <label>Teléfono / WhatsApp</label>
+            <input type="tel" name="phone" placeholder="+1 (555) 000-0000">
+        </div>
+
+        <div class="form-group">
+            <label>¿Cuál es tu meta principal?</label>
+            <select name="goal" required>
+                <option value="" disabled selected>Selecciona una opción</option>
+                <option>Jubilarme antes de los 55</option>
+                <option>Pagar la universidad de mis hijos</option>
+                <option>Pagar menos impuestos</option>
+                <option>Las 3 metas anteriores</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn-form">QUIERO MI CONSULTA GRATIS →</button>
+
+        <p class="form-privacy">🔒 Tu información es 100% privada y segura</p>
+
+    </form>
+
 </div>
-        <button class="btn-form">QUIERO MI CONSULTA GRATIS →</button>
-      <p class="form-privacy">🔒 Tu información es 100% privada y segura</p>
     </div>
   </div>
 </section>
@@ -1271,31 +1285,26 @@
 </footer>
 
 <script>
-  // Smooth scroll
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      e.preventDefault();
-      const target = document.querySelector(a.getAttribute('href'));
-      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
+document.getElementById("leadForm").addEventListener("submit", async function(e) {
+  e.preventDefault();
+
+  const form = e.target;
+  const data = new FormData(form);
+
+  const response = await fetch("https://api.staticforms.xyz/submit", {
+    method: "POST",
+    body: data
   });
 
-  // Scroll reveal
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.style.opacity = '1';
-        entry.target.style.transform = 'translateY(0)';
-      }
-    });
-  }, { threshold: 0.1 });
-
-  document.querySelectorAll('.problem-card, .solution-item, .step-card, .stat-item').forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(20px)';
-    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    observer.observe(el);
-  });
+  if (response.ok) {
+    alert("¡Gracias! Tu consulta fue enviada correctamente. Revisa tu correo para más detalles.");
+    form.reset();
+  } else {
+    alert("Hubo un error enviando el formulario. Intenta nuevamente.");
+  }
+});
 </script>
+
+ 
 </body>
 </html>
